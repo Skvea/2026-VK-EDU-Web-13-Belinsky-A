@@ -7,7 +7,6 @@
         <meta name="description" content="BezBazara: short and to the point. Ask questions, get answers.">
         <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
         <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32.png">
-        <link rel="apple-touch-icon" href="static/img/apple-touch-icon.png">
         <link rel="stylesheet" href="static/css/style.css">
     </head>
     <body>
@@ -17,8 +16,10 @@
                 <p>Short and to the point</p>
             </div>
             <div class="header-search">
-                <input type="search" placeholder="Input text here" aria-label="Search">
-                <a class="btn" href="ask.html">Ask</a>
+                <form class="header-search-form" role="search" action="index.html" method="get">
+                    <input type="search" name="q" placeholder="Input text here" aria-label="Search" maxlength="100">
+                    <button type="submit">Search</button>
+                </form>
             </div>
 
             <!-- не авторизованный пользователь -->
@@ -30,6 +31,8 @@
             </div>
 
             <!-- авторизованный пользователь
+            (в этом случае в .header-search после формы добавляется:
+             <a class="ask-btn" href="ask.html">Ask</a>)
             <div class="header-user-info">
                 <img class="avatar" src="static/img/avatar-default.png" alt="Avatar">
                 <div class="header-user-actions">

@@ -6,10 +6,6 @@
         <title>New question — BezBazara</title>
         <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
         <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32.png">
-        <link rel="apple-touch-icon" href="static/img/apple-touch-icon.png">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap">
         <link rel="stylesheet" href="static/css/style.css">
     </head>
     <body>
@@ -19,14 +15,20 @@
                 <p>Short and to the point</p>
             </div>
             <div class="header-search">
-                <input type="search" placeholder="Input text here" aria-label="Search">
-                <a class="btn" href="ask.html">Ask</a>
+                <form class="header-search-form" role="search" action="index.html" method="get">
+                    <input type="search" name="q" placeholder="Input text here" aria-label="Search" maxlength="100">
+                    <button type="submit">Search</button>
+                </form>
             </div>
 
             <div class="header-user-info">
+                <img class="avatar" src="static/img/avatar-default.png" alt="Avatar">
                 <div class="header-user-actions">
-                    <a href="login.html">Log in</a>
-                    <a href="signup.html">Register</a>
+                    <span id="span-1">Dr. Pepper</span>
+                    <div>
+                        <a href="profile.html">Settings</a>
+                        <a href="login.html">Logout</a>
+                    </div>
                 </div>
             </div>
         </header>
