@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Settings: Dr. Pepper — BezBazara</title>
+        <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32.png">
+        <link rel="apple-touch-icon" href="static/img/apple-touch-icon.png">
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <header>
+            <div class="main-label">
+                <a href="index.html" id="h1-1"><h1>BezBazara</h1></a>
+                <p>Short and to the point</p>
+            </div>
+            <div class="header-search">
+                <input type="search" placeholder="Input text here" aria-label="Search">
+                <a class="btn" href="ask.html">Ask</a>
+            </div>
+
+            <div class="header-user-info">
+                <img class="avatar" src="static/img/avatar-default.png" alt="Avatar">
+                <div class="header-user-actions">
+                    <span id="span-1">Dr. Pepper</span>
+                    <div>
+                        <a href="profile.html">Settings</a>
+                        <a href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="form-page">
+                <h2>Settings: Dr. Pepper</h2>
+                <form class="form" action="#" method="post" enctype="multipart/form-data">
+                    <div class="form-alert" role="alert">Settings were not saved. Please fix the errors below.</div>
+
+                    <label for="login">Login</label>
+                    <div class="form-field">
+                        <input type="text" id="login" name="login" class="form-control" maxlength="30" value="dr_pepper" autocomplete="username" required>
+                        <p class="form-hint">Latin letters, digits and underscore, up to 30 characters.</p>
+                    </div>
+
+                    <label for="email">Email</label>
+                    <div class="form-field">
+                        <input type="email" id="email" name="email" class="form-control is-invalid" maxlength="254" value="dr.pepper@mail" autocomplete="email" aria-invalid="true" aria-describedby="email-error" required>
+                        <p class="form-error" id="email-error">Enter a valid email address.</p>
+                    </div>
+
+                    <label for="nickname">NickName</label>
+                    <div class="form-field">
+                        <input type="text" id="nickname" name="nickname" class="form-control" maxlength="30" value="Dr. Pepper" required>
+                        <p class="form-hint">The name shown next to your questions and answers.</p>
+                    </div>
+
+                    <label for="avatar">Upload avatar</label>
+                    <div class="form-field avatar-upload">
+                        <img class="avatar avatar-xl" src="static/img/avatar-default.png" alt="Current avatar">
+                        <input type="file" id="avatar" name="avatar" class="form-control" accept="image/png, image/jpeg">
+                        <p class="form-hint">JPG or PNG, up to 2 MB.</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="additional">
+                <div class="popular-tags">
+                    <h2>Popular Tags</h2>
+                    <div class="tags">
+                        <p><a href="tag.html">perl</a></p>
+                        <p><a href="tag.html">python</a></p>
+                        <p><a href="tag.html">TechnoPark</a></p>
+                        <p><a href="tag.html">MySQL</a></p>
+                        <p><a href="tag.html">django</a></p>
+                        <p><a href="tag.html">Mail.Ru</a></p>
+                        <p><a href="tag.html">Voloshin</a></p>
+                        <p><a href="tag.html">FireFox</a></p>
+                    </div>
+                </div>
+                <div class="best-members">
+                    <h2>Best Members</h2>
+                    <div class="best-mambers-block">
+                        <p><a href="index.html" class="a-2">Mr.Freeman</a></p>
+                        <p><a href="index.html" class="a-2">Dr.House</a></p>
+                        <p><a href="index.html" class="a-2">Bender</a></p>
+                        <p><a href="index.html" class="a-2">Queen Victoria</a></p>
+                        <p><a href="index.html" class="a-2">V.Pupkin</a></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p class="copyright">© 2026 BezBazara</p>
+        </footer>
+    </body>
+</html>
