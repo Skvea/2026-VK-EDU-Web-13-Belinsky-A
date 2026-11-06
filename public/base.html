@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BezBazara — questions and answers</title>
+        <meta name="description" content="BezBazara: short and to the point. Ask questions, get answers.">
+        <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+        <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon-32.png">
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <header>
+            <div class="main-label">
+                <a href="index.html" id="h1-1"><h1>BezBazara</h1></a>
+                <p>Short and to the point</p>
+            </div>
+            <div class="header-search">
+                <form class="header-search-form" role="search" action="index.html" method="get">
+                    <input type="search" name="q" placeholder="Input text here" aria-label="Search" maxlength="100">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- не авторизованный пользователь -->
+            <div class="header-user-info">
+                <div class="header-user-actions">
+                    <a href="login.html">Log in</a>
+                    <a href="signup.html">Register</a>
+                </div>
+            </div>
+
+            <!-- авторизованный пользователь
+            (в этом случае в .header-search после формы добавляется:
+             <a class="ask-btn" href="ask.html">Ask</a>)
+            <div class="header-user-info">
+                <img class="avatar" src="static/img/avatar-default.png" alt="Avatar">
+                <div class="header-user-actions">
+                    <span id="span-1">Dr. Pepper</span>
+                    <div>
+                        <a href="profile.html">Settings</a>
+                        <a href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+            -->
+        </header>
+        <main>
+            <div class="questions">
+            </div>
+
+            <div class="additional">
+                <div class="popular-tags">
+                    <h2>Popular Tags</h2>
+                    <div class="tags">
+                        <p><a href="tag.html">perl</a></p>
+                        <p><a href="tag.html">python</a></p>
+                        <p><a href="tag.html">TechnoPark</a></p>
+                        <p><a href="tag.html">MySQL</a></p>
+                        <p><a href="tag.html">django</a></p>
+                        <p><a href="tag.html">Mail.Ru</a></p>
+                        <p><a href="tag.html">Voloshin</a></p>
+                        <p><a href="tag.html">FireFox</a></p>
+                    </div>
+                </div>
+                <div class="best-members">
+                    <h2>Best Members</h2>
+                    <div class="best-mambers-block">
+                        <p><a href="index.html" class="a-2">Mr.Freeman</a></p>
+                        <p><a href="index.html" class="a-2">Dr.House</a></p>
+                        <p><a href="index.html" class="a-2">Bender</a></p>
+                        <p><a href="index.html" class="a-2">Queen Victoria</a></p>
+                        <p><a href="index.html" class="a-2">V.Pupkin</a></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p class="copyright">© 2026 BezBazara</p>
+        </footer>
+    </body>
+</html>
