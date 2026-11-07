@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Settings: Dr. Pepper{% endblock %}
+
+{% block content %}
+    <div class="form-page">
+        <h2>Settings: Dr. Pepper</h2>
+        <form class="form" action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-alert" role="alert">Settings were not saved. Please fix the errors below.</div>
+
+            <label for="login">Login</label>
+            <div class="form-field">
+                <input type="text" id="login" name="login" class="form-control" maxlength="30" value="dr_pepper" autocomplete="username" required>
+                <p class="form-hint">Latin letters, digits and underscore, up to 30 characters.</p>
+            </div>
+
+            <label for="email">Email</label>
+            <div class="form-field">
+                <input type="email" id="email" name="email" class="form-control is-invalid" maxlength="254" value="dr.pepper@mail" autocomplete="email" aria-invalid="true" aria-describedby="email-error" required>
+                <p class="form-error" id="email-error">Enter a valid email address.</p>
+            </div>
+
+            <label for="nickname">NickName</label>
+            <div class="form-field">
+                <input type="text" id="nickname" name="nickname" class="form-control" maxlength="30" value="Dr. Pepper" required>
+                <p class="form-hint">The name shown next to your questions and answers.</p>
+            </div>
+
+            <label for="avatar">Upload avatar</label>
+            <div class="form-field avatar-upload">
+                <img class="avatar avatar-xl" src="{% static 'core/img/avatar-default.png' %}" alt="Current avatar">
+                <input type="file" id="avatar" name="avatar" class="form-control" accept="image/png, image/jpeg">
+                <p class="form-hint">JPG or PNG, up to 2 MB.</p>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

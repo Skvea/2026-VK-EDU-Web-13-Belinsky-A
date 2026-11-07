@@ -1,0 +1,13 @@
+{% if page.paginator.num_pages > 1 %}
+    <nav class="pagination" aria-label="Pages">
+        {% for num in page.elided_range %}
+            {% if num == page.paginator.ELLIPSIS %}
+                <span>...</span>
+            {% elif num == page.number %}
+                <a href="?page={{ num }}" aria-current="page">{{ num }}</a>
+            {% else %}
+                <a href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+{% endif %}

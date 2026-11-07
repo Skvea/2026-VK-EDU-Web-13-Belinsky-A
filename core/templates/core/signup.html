@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <div class="form-page">
+        <h2>Registration</h2>
+        <form class="form" action="{% url 'signup' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-alert" role="alert">Registration failed. Please fix the errors below.</div>
+
+            <label for="login">Login</label>
+            <div class="form-field">
+                <input type="text" id="login" name="login" class="form-control" maxlength="30" value="dr_pepper" autocomplete="username" required>
+                <p class="form-hint">Latin letters, digits and underscore, up to 30 characters.</p>
+            </div>
+
+            <label for="email">Email</label>
+            <div class="form-field">
+                <input type="email" id="email" name="email" class="form-control is-invalid" maxlength="254" value="dr.pepper@mail.ru" autocomplete="email" aria-invalid="true" aria-describedby="email-error" required>
+                <p class="form-error" id="email-error">Sorry, this email address is already registered!</p>
+            </div>
+
+            <label for="nickname">NickName</label>
+            <div class="form-field">
+                <input type="text" id="nickname" name="nickname" class="form-control" maxlength="30" value="Dr. Pepper" required>
+                <p class="form-hint">The name shown next to your questions and answers.</p>
+            </div>
+
+            <label for="password">Password</label>
+            <div class="form-field">
+                <input type="password" id="password" name="password" class="form-control" minlength="8" maxlength="128" value="12345678" autocomplete="new-password" required>
+                <p class="form-hint">At least 8 characters.</p>
+            </div>
+
+            <label for="password2">Repeat password</label>
+            <div class="form-field">
+                <input type="password" id="password2" name="password2" class="form-control is-invalid" minlength="8" maxlength="128" value="1234567" autocomplete="new-password" aria-invalid="true" aria-describedby="password2-error" required>
+                <p class="form-error" id="password2-error">Passwords do not match.</p>
+            </div>
+
+            <label for="avatar">Upload avatar</label>
+            <div class="form-field">
+                <input type="file" id="avatar" name="avatar" class="form-control" accept="image/png, image/jpeg">
+                <p class="form-hint">JPG or PNG, up to 2 MB. Optional.</p>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Register!</button>
+            </div>
+
+            <p class="form-link form-actions">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+        </form>
+    </div>
+{% endblock %}

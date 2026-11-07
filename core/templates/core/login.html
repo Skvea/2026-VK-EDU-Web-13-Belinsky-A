@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+    <div class="form-page">
+        <h2>Log In</h2>
+        <form class="form" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-alert" role="alert">Sorry, wrong login or password!</div>
+
+            <label for="login">Login</label>
+            <div class="form-field">
+                <input type="text" id="login" name="login" class="form-control" maxlength="30" placeholder="Enter your login here" autocomplete="username" required>
+            </div>
+
+            <label for="password">Password</label>
+            <div class="form-field">
+                <input type="password" id="password" name="password" class="form-control" maxlength="128" value="12345678" autocomplete="current-password" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Log in!</button>
+            </div>
+
+            <p class="form-link form-actions"><a href="{% url 'signup' %}">create new account</a></p>
+        </form>
+    </div>
+{% endblock %}

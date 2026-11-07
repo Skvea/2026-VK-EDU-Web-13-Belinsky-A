@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}BezBazara{% endblock %} — BezBazara</title>
+        <meta name="description" content="BezBazara: short and to the point. Ask questions, get answers.">
+        <link rel="icon" type="image/svg+xml" href="{% static 'core/img/favicon.svg' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/img/favicon-32.png' %}">
+        <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    </head>
+    <body>
+        {% include 'core/includes/header.html' %}
+        <main>
+            {% block content %}{% endblock %}
+            {% include 'core/includes/sidebar.html' %}
+        </main>
+        <footer>
+            {% block pagination %}{% endblock %}
+            <p class="copyright">© 2026 BezBazara</p>
+        </footer>
+    </body>
+</html>

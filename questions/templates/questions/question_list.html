@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="questions">
+        {% block heading %}{% endblock %}
+        {% for question in page %}
+            {% include 'questions/includes/question_card.html' %}
+        {% empty %}
+            <p>No questions yet.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% include 'core/includes/pagination.html' %}
+{% endblock %}
