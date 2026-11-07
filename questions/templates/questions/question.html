@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ question.title }}{% endblock %}
+
+{% block content %}
+    <div class="questions">
+        <article class="question-full">
+            <div class="question-avatar-and-likes">
+                <img class="avatar avatar-lg" src="{% static 'core/img/avatar-default.png' %}" alt="">
+                <div class="likes-common">
+                    <div class="updown-buttons">
+                        <button type="button" class="updown-button" aria-label="Нравится" aria-pressed="false">▲</button>
+                        <button type="button" class="updown-button" aria-label="Не нравится" aria-pressed="false">▼</button>
+                    </div>
+                    <span class="likes-count">{{ question.likes }}</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <h2 class="question-title">{{ question.title }}</h2>
+                <p>{{ question.text }}</p>
+                <p class="meta">Asked <time datetime="{{ question.created }}">{{ question.created }}</time> · {{ question.answers_count }} answers</p>
+                <p>Tags:
+                    {% for tag in question.tags %}
+                        <a href="{% url 'tag' tag %}">{{ tag }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+        </article>
+
+        <hr class="divider">
+
+        <h2>Answers ({{ page.paginator.count }})</h2>
+
+        {% for answer in page %}
+            {% include 'questions/includes/answer.html' %}
+        {% endfor %}
+
+        {% include 'core/includes/pagination.html' %}
+
+        <hr class="divider">
+
+        <form class="form form-stack" action="{% url 'question' question.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="answer-text" class="sr-only">Your answer</label>
+                <textarea id="answer-text" name="text" class="form-control" rows="5" maxlength="2000" placeholder="Enter your answer here..." required></textarea>
+                <p class="form-hint">Up to 2000 characters.</p>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Answer</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

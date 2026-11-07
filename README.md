@@ -1,46 +1,62 @@
 # BezBazara
 
-Статическая верстка сайта форума (домашнее задание 1, VK Education курс по вебу).
-Только HTML и CSS.
+Сайт вопросов и ответов на Django (VK Education, курс по вебу).
+Домашнее задание 2: views с данными-заглушками, маршрутизация, шаблоны и пагинация. Базы данных и логики пока нет.
 
-## Как открыть
+## Запуск локально
 
-Нужен только браузер и Python 3. Шрифты и картинки лежат в `public/static/`.
-
-Запустить локальный сервер из корня проекта:
+Нужен Python 3.12 или новее.
 
 ```bash
-cd public
-python3 -m http.server 8000
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+python manage.py runserver
 ```
 
-После этого сайт будет доступен на http://localhost:8000/index.html. Остановить сервер: `Ctrl+C`.
+Сайт будет доступен на http://localhost:8000/. Остановить сервер: `Ctrl+C`.
 
-Можно и просто открыть `public/index.html` в браузере , но через сервер надежнее (например, в Safari иконка вкладки загружается только так).
+## Запуск через Docker Compose
 
-Формы отправляются методом POST, а `http.server` его не поддерживает, поэтому при нажатии на кнопку отправки (Ask!, Log in, Register!, Save, Answer) мы получим `501 Unsupported method ('POST')`.
+Нужен установленный Docker.
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+Сайт будет доступен на http://localhost:8000/. Остановить: `Ctrl+C`, затем `docker compose down`.
+
+Код проекта подключен в контейнер как volume, поэтому изменения файлов сразу видны в контейнере. Загруженные файлы (`media/`) хранятся в отдельном volume и не пропадают при пересборке.
 
 ## Страницы
 
-| Страница | Файл | Описание |
-|----------|------|----------|
-| Главная (index) | `public/index.html` | Список новыъ вопросов с пагинацией |
-| Вопрос (question) | `public/question.html` | Вопрос, ответы, форма ответа |
-| Новый вопрос (ask) | `public/ask.html` | Форма создания вопроса |
-| Вход (login) | `public/login.html` | Форма входа |
-| Регистрация (signup) | `public/signup.html` | Форма регистрации |
-| Настройки (profile) | `public/profile.html` | Редактирование профиля |
-| Вопросы по тегу (tag) | `public/tag.html` | Список вопросов по тегу |
-| Базовый шаблон | `public/base.html` | Общий layout: шапка,сайдбар, подвал |
+| URL | Имя маршрута | Описание |
+|-----|--------------|----------|
+| `/` | `index` | Новые вопросы |
+| `/hot/` | `hot` | Лучшие вопросы |
+| `/tag/<имя>/` | `tag` | Вопросы по тегу |
+| `/question/<id>/` | `question` | Вопрос и список ответов |
+| `/ask/` | `ask` | Создание вопроса |
+| `/login/` | `login` | Вход |
+| `/signup/` | `signup` | Регистрация |
+| `/profile/` | `profile` | Редактирование профиля |
+
+Списки разбиты на страницы параметром `?page=N`. Неверное значение заменяется на первую или последнюю страницу.
 
 ## Структура
 
 ```
-public/
-├── *.html
-└── static/
-    ├── css/    стили
-    ├── js/     скрипты
-    ├── img/    изображения, аватарки, иконки
-    └── fonts/  шрифт
+application/            настройки проекта и корневой urls.py
+core/                   пользовательские страницы (вход, регистрация, профиль), базовый шаблон
+  templates/core/       base.html и подшаблоны (includes/)
+  static/core/          css, шрифты, изображения
+  utils.py              функция paginate()
+questions/              вопросы (списки, страница вопроса, создание)
+  templates/questions/  шаблоны страниц вопросов
+manage.py
+requirements.txt
+Dockerfile, docker-compose.yml
+.env.example            пример переменных окружения
 ```
