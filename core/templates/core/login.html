@@ -7,18 +7,32 @@
         <h2>Log In</h2>
         <form class="form" action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            {% if has_error %}
-                <div class="form-alert" role="alert">Sorry, wrong login or password!</div>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="form-alert" role="alert">{{ error }}</div>
+                {% endfor %}
+            {% elif form.errors %}
+                <div class="form-alert" role="alert">Please check the entered credentials.</div>
+            {% endif %}
+
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
             {% endif %}
 
             <label for="login">Login</label>
             <div class="form-field">
-                <input type="text" id="login" name="login" class="form-control" maxlength="30" placeholder="Enter your login here" autocomplete="username" required>
+                <input type="text" id="login" name="login" class="form-control{% if form.login.errors %} is-invalid{% endif %}" maxlength="30" placeholder="Enter your login here" autocomplete="username" value="{{ form.login.value|default:'' }}" required>
+                {% if form.login.errors %}
+                    <p class="form-error">{{ form.login.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="password">Password</label>
             <div class="form-field">
-                <input type="password" id="password" name="password" class="form-control" maxlength="128" placeholder="Enter your password here" autocomplete="current-password" required>
+                <input type="password" id="password" name="password" class="form-control{% if form.password.errors %} is-invalid{% endif %}" maxlength="128" placeholder="Enter your password here" autocomplete="current-password" required>
+                {% if form.password.errors %}
+                    <p class="form-error">{{ form.password.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <div class="form-actions">

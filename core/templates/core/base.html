@@ -8,7 +8,7 @@
         <meta name="description" content="BezBazara: short and to the point. Ask questions, get answers.">
         <link rel="icon" type="image/svg+xml" href="{% static 'core/img/favicon.svg' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/img/favicon-32.png' %}">
-        <link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=3">
+        <link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=5">
     </head>
     <body>
         {% include 'core/includes/header.html' %}
@@ -20,5 +20,6 @@
             {% block pagination %}{% endblock %}
             <p class="copyright">© 2026 BezBazara</p>
         </footer>
+        <script src="{% static 'core/js/app.js' %}?v=2"></script>
     </body>
 </html>

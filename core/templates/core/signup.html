@@ -7,42 +7,60 @@
         <h2>Registration</h2>
         <form class="form" action="{% url 'signup' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-alert" role="alert">Registration failed. Please fix the errors below.</div>
+            {% if form.errors %}
+                <div class="form-alert" role="alert">Registration failed. Please fix the errors below.</div>
+            {% endif %}
 
             <label for="login">Login</label>
             <div class="form-field">
-                <input type="text" id="login" name="login" class="form-control" maxlength="30" value="dr_pepper" autocomplete="username" required>
+                <input type="text" id="login" name="login" class="form-control{% if form.login.errors %} is-invalid{% endif %}" maxlength="30" value="{{ form.login.value|default:'' }}" autocomplete="username" required>
                 <p class="form-hint">Latin letters, digits and underscore, up to 30 characters.</p>
+                {% if form.login.errors %}
+                    <p class="form-error">{{ form.login.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="email">Email</label>
             <div class="form-field">
-                <input type="email" id="email" name="email" class="form-control is-invalid" maxlength="254" value="dr.pepper@mail.ru" autocomplete="email" aria-invalid="true" aria-describedby="email-error" required>
-                <p class="form-error" id="email-error">Sorry, this email address is already registered!</p>
+                <input type="email" id="email" name="email" class="form-control{% if form.email.errors %} is-invalid{% endif %}" maxlength="254" value="{{ form.email.value|default:'' }}" autocomplete="email" required>
+                {% if form.email.errors %}
+                    <p class="form-error">{{ form.email.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="nickname">NickName</label>
             <div class="form-field">
-                <input type="text" id="nickname" name="nickname" class="form-control" maxlength="30" value="Dr. Pepper" required>
+                <input type="text" id="nickname" name="nickname" class="form-control{% if form.nickname.errors %} is-invalid{% endif %}" maxlength="30" value="{{ form.nickname.value|default:'' }}" required>
                 <p class="form-hint">The name shown next to your questions and answers.</p>
+                {% if form.nickname.errors %}
+                    <p class="form-error">{{ form.nickname.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="password">Password</label>
             <div class="form-field">
-                <input type="password" id="password" name="password" class="form-control" minlength="8" maxlength="128" value="12345678" autocomplete="new-password" required>
+                <input type="password" id="password" name="password" class="form-control{% if form.password.errors %} is-invalid{% endif %}" minlength="8" maxlength="128" autocomplete="new-password" required>
                 <p class="form-hint">At least 8 characters.</p>
+                {% for err in form.password.errors %}
+                    <p class="form-error">{{ err }}</p>
+                {% endfor %}
             </div>
 
             <label for="password2">Repeat password</label>
             <div class="form-field">
-                <input type="password" id="password2" name="password2" class="form-control is-invalid" minlength="8" maxlength="128" value="1234567" autocomplete="new-password" aria-invalid="true" aria-describedby="password2-error" required>
-                <p class="form-error" id="password2-error">Passwords do not match.</p>
+                <input type="password" id="password2" name="password2" class="form-control{% if form.password2.errors %} is-invalid{% endif %}" minlength="8" maxlength="128" autocomplete="new-password" required>
+                {% if form.password2.errors %}
+                    <p class="form-error">{{ form.password2.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="avatar">Upload avatar</label>
             <div class="form-field">
-                <input type="file" id="avatar" name="avatar" class="form-control" accept="image/png, image/jpeg">
-                <p class="form-hint">JPG or PNG, up to 2 MB. Optional.</p>
+                <input type="file" id="avatar" name="avatar" class="form-control{% if form.avatar.errors %} is-invalid{% endif %}" accept="image/png, image/jpeg, image/webp">
+                <p class="form-hint">JPG, PNG, or WEBP, up to 2 MB. Optional.</p>
+                {% if form.avatar.errors %}
+                    <p class="form-error">{{ form.avatar.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <div class="form-actions">

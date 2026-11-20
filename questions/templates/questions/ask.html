@@ -7,26 +7,35 @@
         <h2>New Question</h2>
         <form class="form" action="{% url 'ask' %}" method="post">
             {% csrf_token %}
-            <div class="form-alert" role="alert">Your question was not published. Please fix the errors below.</div>
+            {% if form.errors %}
+                <div class="form-alert" role="alert">Your question was not published. Please fix the errors below.</div>
+            {% endif %}
 
             <label for="title">Title</label>
             <div class="form-field">
-                <input type="text" id="title" name="title" class="form-control" maxlength="255" value="How to build a moon park ?" required>
+                <input type="text" id="title" name="title" class="form-control{% if form.title.errors %} is-invalid{% endif %}" maxlength="255" value="{{ form.title.value|default:'' }}" placeholder="Enter question title" required>
                 <p class="form-hint">Short and clear, up to 255 characters.</p>
+                {% if form.title.errors %}
+                    <p class="form-error">{{ form.title.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="text">Text</label>
             <div class="form-field">
-                <textarea id="text" name="text" class="form-control" rows="10" maxlength="5000" required>Really, how ?
-Have no idea about it</textarea>
+                <textarea id="text" name="text" class="form-control{% if form.text.errors %} is-invalid{% endif %}" rows="10" maxlength="5000" placeholder="Describe the problem in detail" required>{{ form.text.value|default:'' }}</textarea>
                 <p class="form-hint">Describe the problem in detail, up to 5000 characters.</p>
+                {% if form.text.errors %}
+                    <p class="form-error">{{ form.text.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <label for="tags">Tags</label>
             <div class="form-field">
-                <input type="text" id="tags" name="tags" class="form-control is-invalid" maxlength="100" value="moon, park, puzzle, space, rocket, nasa" aria-invalid="true" aria-describedby="tags-hint tags-error">
-                <p class="form-error" id="tags-error">You can add no more than 5 tags.</p>
-                <p class="form-hint" id="tags-hint">Separate tags with commas, up to 5 tags.</p>
+                <input type="text" id="tags" name="tags" class="form-control{% if form.tags.errors %} is-invalid{% endif %}" maxlength="200" value="{{ form.tags.value|default:'' }}" placeholder="e.g. python, django, postgres">
+                <p class="form-hint">Separate tags with commas, up to 5 tags.</p>
+                {% if form.tags.errors %}
+                    <p class="form-error">{{ form.tags.errors.0 }}</p>
+                {% endif %}
             </div>
 
             <div class="form-actions">

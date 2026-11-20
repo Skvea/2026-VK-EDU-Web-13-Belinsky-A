@@ -1,19 +1,19 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}{{ question.title }}{% endblock %}
+{% block title %}Question: {{ question.title }}{% endblock %}
 
 {% block content %}
     <div class="questions">
-        <article class="question-full">
+        <article class="question-full" id="question-{{ question.id }}">
             <div class="question-avatar-and-likes">
                 <img class="avatar avatar-lg" src="{{ question.author.profile.get_avatar_url }}" alt="{{ question.author.username }}">
                 <div class="likes-common">
                     <div class="updown-buttons">
-                        <button type="button" class="updown-button" aria-label="Upvote" aria-pressed="false">▲</button>
-                        <button type="button" class="updown-button" aria-label="Downvote" aria-pressed="false">▼</button>
+                        <button type="button" class="updown-button js-vote-btn" data-type="question" data-id="{{ question.id }}" data-value="1" aria-label="Upvote" aria-pressed="false"{% if not request.user.is_authenticated %} title="Log in to vote"{% endif %}>▲</button>
+                        <button type="button" class="updown-button js-vote-btn" data-type="question" data-id="{{ question.id }}" data-value="-1" aria-label="Downvote" aria-pressed="false"{% if not request.user.is_authenticated %} title="Log in to vote"{% endif %}>▼</button>
                     </div>
-                    <span class="likes-count">{{ question.rating }}</span>
+                    <span class="likes-count" id="question-rating-{{ question.id }}">{{ question.rating }}</span>
                 </div>
             </div>
             <div class="question-body">
@@ -46,13 +46,24 @@
 
         <form class="form form-stack" action="{{ question.get_absolute_url }}" method="post">
             {% csrf_token %}
+            {% if form.errors %}
+                <div class="form-alert" role="alert">Please enter your answer text.</div>
+            {% endif %}
             <div class="form-field">
                 <label for="answer-text" class="sr-only">Your answer</label>
-                <textarea id="answer-text" name="text" class="form-control" rows="5" maxlength="2000" placeholder="Enter your answer here..." required></textarea>
-                <p class="form-hint">Up to 2000 characters.</p>
+                {% if request.user.is_authenticated %}
+                    <textarea id="answer-text" name="text" class="form-control{% if form.text.errors %} is-invalid{% endif %}" rows="5" maxlength="2000" placeholder="Enter your answer here..." required>{{ form.text.value|default:'' }}</textarea>
+                    <p class="form-hint">Up to 2000 characters.</p>
+                    {% if form.text.errors %}
+                        <p class="form-error">{{ form.text.errors.0 }}</p>
+                    {% endif %}
+                {% else %}
+                    <textarea id="answer-text" name="text" class="form-control" rows="5" maxlength="2000" placeholder="Please log in to answer this question" disabled title="Log in to answer"></textarea>
+                    <p class="form-hint"><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'signup' %}">register</a> to answer this question.</p>
+                {% endif %}
             </div>
             <div class="form-actions">
-                <button type="submit">Answer</button>
+                <button type="submit"{% if not request.user.is_authenticated %} disabled title="Log in to answer"{% endif %}>Answer</button>
             </div>
         </form>
     </div>

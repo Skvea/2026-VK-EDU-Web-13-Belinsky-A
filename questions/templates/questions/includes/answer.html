@@ -1,18 +1,25 @@
 {% load static %}
-<article class="question answer">
+<article class="question answer" id="answer-{{ answer.id }}">
     <div class="question-avatar-and-likes">
         <img class="avatar" src="{{ answer.author.profile.get_avatar_url }}" alt="{{ answer.author.username }}">
         <div class="likes-common">
             <div class="updown-buttons">
-                <button type="button" class="updown-button" aria-label="Upvote" aria-pressed="false">▲</button>
-                <button type="button" class="updown-button" aria-label="Downvote" aria-pressed="false">▼</button>
+                <button type="button" class="updown-button js-vote-btn" data-type="answer" data-id="{{ answer.id }}" data-value="1" aria-label="Upvote" aria-pressed="false"{% if not request.user.is_authenticated %} title="Log in to vote"{% endif %}>▲</button>
+                <button type="button" class="updown-button js-vote-btn" data-type="answer" data-id="{{ answer.id }}" data-value="-1" aria-label="Downvote" aria-pressed="false"{% if not request.user.is_authenticated %} title="Log in to vote"{% endif %}>▼</button>
             </div>
-            <span class="likes-count">{{ answer.rating }}</span>
+            <span class="likes-count" id="answer-rating-{{ answer.id }}">{{ answer.rating }}</span>
         </div>
     </div>
     <div class="question-text">
         <p>{{ answer.text }}</p>
         <p class="meta">Answered <time datetime="{{ answer.created_at|date:'c' }}">{{ answer.created_at|date:'Y-m-d H:i' }}</time></p>
-        <label class="correct"><input type="checkbox"{% if answer.is_correct %} checked{% endif %}> Correct!</label>
+        <label class="correct">
+            {% if request.user == question.author %}
+                <input type="checkbox" class="js-correct-checkbox" data-answer-id="{{ answer.id }}"{% if answer.is_correct %} checked{% endif %}>
+            {% else %}
+                <input type="checkbox" disabled{% if answer.is_correct %} checked{% endif %} title="Only the question author can mark the correct answer">
+            {% endif %}
+            Correct!
+        </label>
     </div>
 </article>
