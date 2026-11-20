@@ -204,9 +204,12 @@ img.avatar{
 }
 
 
-.updown-button:hover {
+.updown-button:hover,
+.updown-button.active,
+.updown-button[aria-pressed="true"] {
     border: 3px solid var(--red);
     background: var(--red);
+    color: var(--peach);
 }
 
 .updown-button:active {
@@ -472,6 +475,14 @@ img.avatar-xl{
     padding: 10px 14px;
     border: 3px solid var(--red);
     font-weight: bold;
+}
+.form-alert-success{
+    border-color: #2e7d32 !important;
+    color: #2e7d32 !important;
+}
+button[disabled], input[disabled], textarea[disabled]{
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .form-control{

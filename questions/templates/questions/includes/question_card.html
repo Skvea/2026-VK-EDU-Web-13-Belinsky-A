@@ -1,13 +1,13 @@
 {% load static %}
-<div class="question">
+<div class="question" id="question-{{ question.id }}">
     <div class="question-avatar-and-likes">
         <img class="avatar" src="{{ question.author.profile.get_avatar_url }}" alt="{{ question.author.username }}">
         <div class="likes-common">
             <div class="updown-buttons">
-                <button type="button" class="updown-button" aria-label="Upvote" aria-pressed="false">▲</button>
-                <button type="button" class="updown-button" aria-label="Downvote" aria-pressed="false">▼</button>
+                <button type="button" class="updown-button js-vote-btn" data-type="question" data-id="{{ question.id }}" data-value="1" aria-label="Upvote" aria-pressed="false"{% if not request.user.is_authenticated %} title="Log in to vote"{% endif %}>▲</button>
+                <button type="button" class="updown-button js-vote-btn" data-type="question" data-id="{{ question.id }}" data-value="-1" aria-label="Downvote" aria-pressed="false"{% if not request.user.is_authenticated %} title="Log in to vote"{% endif %}>▼</button>
             </div>
-            <span class="likes-count">{{ question.rating }}</span>
+            <span class="likes-count" id="question-rating-{{ question.id }}">{{ question.rating }}</span>
         </div>
     </div>
     <div class="question-text">
