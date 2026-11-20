@@ -1,16 +1,56 @@
 services:
+  db:
+    image: postgres:16-alpine
+    container_name: bezbazara_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-bezbazara_db}
+      POSTGRES_USER: ${DB_USER:-bezbazara_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-bezbazara_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-bezbazara_user} -d ${DB_NAME:-bezbazara_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
   web:
     build: .
+    container_name: bezbazara_web
+    restart: unless-stopped
     ports:
       - "8000:8000"
     env_file:
+      - path: .env.docker
+        required: false
       - path: .env
         required: false
     environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-bezbazara_db}
+      DB_USER: ${DB_USER:-bezbazara_user}
+      DB_PASSWORD: ${DB_PASSWORD:-bezbazara_password}
+      DB_ENGINE: django.db.backends.postgresql
       ALLOWED_HOSTS: "*"
+    depends_on:
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
       - media_data:/app/media
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
 
 volumes:
+  pg_data:
   media_data:

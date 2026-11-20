@@ -6,7 +6,7 @@
         {% for question in page %}
             {% include 'questions/includes/question_card.html' %}
         {% empty %}
-            <p>No questions yet.</p>
+            <p class="empty-state">No questions yet.</p>
         {% endfor %}
     </div>
 {% endblock %}

@@ -2,12 +2,6 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 def paginate(objects_list, request, per_page=10):
-    """Return the requested page of objects_list.
-
-    Invalid ?page= values fall back to defaults: a non-integer gives the first
-    page, a number out of range gives the first (below 1) or the last page.
-    The page gets an `elided_range` attribute for the paginator template.
-    """
     try:
         per_page = int(per_page)
     except (TypeError, ValueError):

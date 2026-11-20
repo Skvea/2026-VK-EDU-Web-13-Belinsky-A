@@ -1,67 +1,38 @@
-from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from core.utils import paginate
-
-TAGS = ['black-jack', 'bender', 'python', 'perl', 'django', 'MySQL', 'TechnoPark', 'FireFox']
-
-QUESTIONS = [
-    {
-        'id': i,
-        'title': f'Question title {i}',
-        'text': f'Text of the question {i}. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
-        'likes': (i * 37) % 101 - 10,
-        'answers_count': (i * 7) % 13,
-        'tags': [TAGS[i % len(TAGS)], TAGS[(i * 3 + 1) % len(TAGS)]],
-        'created': f'2026-10-{i % 28 + 1:02d}T14:25',
-    }
-    for i in range(1, 101)
-]
-
-
-def make_answers(question_id):
-    return [
-        {
-            'id': i,
-            'text': f'Answer {i} to question {question_id}. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
-            'likes': (i * 5) % 9 - 2,
-            'is_correct': i == 1,
-            'created': f'2026-10-{i % 28 + 1:02d}T15:02',
-        }
-        for i in range(1, 14)
-    ]
+from .models import Answer, Question, Tag
 
 
 def index(request):
-    page = paginate(QUESTIONS, request, per_page=5)
-    return render(request, 'questions/index.html', {'page': page, 'is_authorized': True})
+    questions = Question.objects.new()
+    page = paginate(questions, request, per_page=10)
+    return render(request, 'questions/index.html', {'page': page})
 
 
 def hot(request):
-    hot_questions = sorted(QUESTIONS, key=lambda q: q['likes'], reverse=True)
-    page = paginate(hot_questions, request, per_page=5)
-    return render(request, 'questions/hot.html', {'page': page, 'is_authorized': True})
+    questions = Question.objects.best()
+    page = paginate(questions, request, per_page=10)
+    return render(request, 'questions/hot.html', {'page': page})
 
 
 def tag(request, tag_name):
-    tag_questions = [q for q in QUESTIONS if tag_name in q['tags']]
-    page = paginate(tag_questions, request, per_page=5)
+    tag_obj = get_object_or_404(Tag, name=tag_name)
+    questions = Question.objects.by_tag(tag_name)
+    page = paginate(questions, request, per_page=10)
     return render(request, 'questions/tag.html', {
         'page': page,
-        'tag_name': tag_name,
-        'is_authorized': True,
+        'tag': tag_obj,
+        'tag_name': tag_obj.name,
     })
 
 
 def question(request, question_id):
-    if not 1 <= question_id <= len(QUESTIONS):
-        raise Http404('Question not found')
-    page = paginate(make_answers(question_id), request, per_page=3)
-    return render(request, 'questions/question.html', {
-        'question': QUESTIONS[question_id - 1],
-        'page': page,
-    })
+    question_obj = get_object_or_404(Question, pk=question_id)
+    answers = Answer.objects.for_question(question_obj.id)
+    page = paginate(answers, request, per_page=5)
+    return render(request, 'questions/question.html', {'question': question_obj, 'page': page})
 
 
 def ask(request):
-    return render(request, 'questions/ask.html', {'is_authorized': True})
+    return render(request, 'questions/ask.html')

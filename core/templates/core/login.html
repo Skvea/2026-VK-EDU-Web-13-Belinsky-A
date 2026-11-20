@@ -7,7 +7,9 @@
         <h2>Log In</h2>
         <form class="form" action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            <div class="form-alert" role="alert">Sorry, wrong login or password!</div>
+            {% if has_error %}
+                <div class="form-alert" role="alert">Sorry, wrong login or password!</div>
+            {% endif %}
 
             <label for="login">Login</label>
             <div class="form-field">
@@ -16,7 +18,7 @@
 
             <label for="password">Password</label>
             <div class="form-field">
-                <input type="password" id="password" name="password" class="form-control" maxlength="128" value="12345678" autocomplete="current-password" required>
+                <input type="password" id="password" name="password" class="form-control" maxlength="128" placeholder="Enter your password here" autocomplete="current-password" required>
             </div>
 
             <div class="form-actions">
