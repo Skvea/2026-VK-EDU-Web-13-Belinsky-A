@@ -3,7 +3,9 @@
         <h2>Popular Tags</h2>
         <div class="tags">
             {% for tag in popular_tags %}
-                <p><a href="{% url 'tag' tag %}">{{ tag }}</a></p>
+                <p><a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a></p>
+            {% empty %}
+                <p class="empty-state">No tags yet</p>
             {% endfor %}
         </div>
     </div>
@@ -11,7 +13,9 @@
         <h2>Best Members</h2>
         <div class="best-mambers-block">
             {% for member in best_members %}
-                <p><a href="{% url 'index' %}" class="a-2">{{ member }}</a></p>
+                <p><a href="{% url 'index' %}" class="a-2">{{ member.display_name }}</a></p>
+            {% empty %}
+                <p class="empty-state">No members yet</p>
             {% endfor %}
         </div>
     </div>

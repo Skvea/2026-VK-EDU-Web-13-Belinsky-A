@@ -99,6 +99,10 @@ p{
     align-items:  center;
     gap:20px;
 }
+.header-user-info img.avatar{
+    outline: 3px solid var(--peach);
+    outline-offset: 2px;
+}
 
 #h1-1{
     display: block;
@@ -188,8 +192,6 @@ img.avatar{
     border:none;
     background: white;
     border-radius:3px;
-    outline: 3px solid var(--peach);
-    outline-offset:2px;
     margin-bottom: 8px;
 }
 .updown-button {
@@ -401,8 +403,12 @@ img.avatar-xl{
     border-top: 2px dashed var(--coral);
 }
 
+.answer{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 .answer .question-text{
-    padding: 12px 20px 12px 0;
+    padding: 0 20px 0 0;
 }
 .answer .question-text p{
     margin: 0 0 8px 0;
